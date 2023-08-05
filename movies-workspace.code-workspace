@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "movieClient"
+		},
+		{
+			"path": "userService"
 		}
 	],
 	"settings": {

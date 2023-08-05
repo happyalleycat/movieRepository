@@ -10,7 +10,7 @@ import Button from 'react-bootstrap/Button'
 const Hero = ({movies}) => {
     const  navigate = useNavigate();
 
-    function reviews(movieId){
+    const reviews = (movieId) => {
         navigate(`/Reviews/${movieId}`);
     }
 
@@ -39,7 +39,7 @@ const Hero = ({movies}) => {
                                                     </div>
                                                 </Link>
                                                 <div className="movie-review-button-container">
-                                                    <Button variant ="info" onClick={() => reviews(movie.imdbId)} >Reviews</Button>
+                                                    <Button variant ="info" onClick={reviews(movie.imdbId)} >Reviews</Button>
                                                 </div>  
                                            </div>
                                         </div>
