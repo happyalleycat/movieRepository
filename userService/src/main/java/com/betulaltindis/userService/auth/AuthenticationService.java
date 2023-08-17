@@ -23,18 +23,13 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
+                .userName(request.getUserName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .userRole(UserRole.USER)
                 .build();
         userRepository.save(user);
-
-        var jwtToken = jwtService.generateToken(user);
-        return AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build();
+        return generateToken(user);
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -45,9 +40,14 @@ public class AuthenticationService {
         var user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow();
 
+        return generateToken(user);
+    }
+
+    private AuthenticationResponse generateToken(User user){
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .role(user.getUserRole().toString())
                 .build();
     }
 
