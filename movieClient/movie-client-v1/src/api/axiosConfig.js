@@ -2,7 +2,7 @@ import axios from "axios";
 
 const Services = {
   movieService: axios.create({
-    baseURL: "http://localhost:8080",
+    baseURL: "http://localhost:8082",
     headers: {
       "ngrok-skip-browser-warning": "true",
     },

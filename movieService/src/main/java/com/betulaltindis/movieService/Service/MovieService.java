@@ -10,6 +10,7 @@ import com.betulaltindis.movieService.Repository.MovieRepository;
 
 @Service
 public class MovieService {
+
     @Autowired
     private MovieRepository movieRepository;
 

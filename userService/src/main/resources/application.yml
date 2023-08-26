@@ -4,10 +4,12 @@ server:
   port: 8081
 
 spring:
+  application:
+    name: user-service
   datasource:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
-    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    url: jdbc:postgresql://host.docker.internal:5432/${DB_NAME}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -19,4 +21,5 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: true
     show-sql: true
+    defer-datasource-initialization: true
 

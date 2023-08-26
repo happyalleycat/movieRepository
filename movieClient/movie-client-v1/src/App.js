@@ -10,6 +10,7 @@ import Reviews from "./components/reviews/Reviews";
 import { Actions } from "./actions/Action";
 import Register from "./components/auth/register/Register";
 import Login from "./components/auth/login/Login";
+import { RequireAuth, IsLoggedIn } from "./components/auth/AuthActions";
 
 function App() {
   const [movies, setMovies] = useState([]);

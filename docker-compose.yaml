@@ -1,0 +1,59 @@
+services:
+  user-db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Tencere_55**
+      - POSTGRES_DB=jwt_security
+    ports:
+      - '5432:5432'
+    networks:
+      - movie-network
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+  user-service:
+    build:
+      context: ./userService
+      args:
+        JAR_FILE: target/*.jar
+    image: user-service:0.0.1-SNAPSHOT
+    ports:
+      - "8081:8081"
+    networks:
+      - movie-network
+    depends_on:
+      - user-db
+    environment:
+      MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
+
+  movie-service:
+    build:
+      context: ./movieService
+      args:
+        JAR_FILE: target/*.jar
+    image: movie-service:0.0.1-SNAPSHOT
+    ports:
+      - "8082:8082"
+    networks:
+      - movie-network
+    depends_on:
+      - user-service
+    environment:
+      MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
+
+  zipkin-server:
+    image: openzipkin/zipkin:2.23
+    ports:
+      - "9411:9411"
+    networks:
+      - movie-network
+    restart: always #Restart if there is a problem starting up
+
+networks:
+  movie-network:
+
+volumes:
+  db:
+    driver: local

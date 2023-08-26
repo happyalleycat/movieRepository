@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.betulaltindis</groupId>
-	<artifactId>movieService</artifactId>
+	<artifactId>movie-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>movieService</name>
+	<name>movie-service</name>
 	<description>Movies Service</description>
 	<properties>
 		<java.version>17</java.version>
@@ -47,6 +47,15 @@
 			<artifactId>spring-dotenv</artifactId>
 			<version>4.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>io.opentelemetry</groupId>
+			<artifactId>opentelemetry-exporter-zipkin</artifactId>
+		</dependency>		
+		<dependency>
+			<groupId>io.zipkin.reporter2</groupId>
+			<artifactId>zipkin-reporter-brave</artifactId>
+		</dependency>
+
 	</dependencies>
 
 	<build>
