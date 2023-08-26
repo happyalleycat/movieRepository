@@ -39,6 +39,7 @@ public class WatchlistService {
                 wl.setMovies(movies);
             }
         }
+        
         watchlistRepository.save(wl);
         return wl;
     }
