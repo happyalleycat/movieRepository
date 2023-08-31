@@ -3,7 +3,9 @@
     background-color: black;
 }
 .movie-poster{
-    height: 300px;
+    position: relative;
+    height: 400px;
+    width: 270px;
     border: 1px solid gold;
     border-radius: 10px;
     overflow: hidden;
@@ -58,6 +60,32 @@
 .play-button-icon:hover{
     font-size: 4rem;
     color: white;
+}
+
+.movie-poster:hover .watchlist-button{
+    display: block;
+    background-color: transparent;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+.watchlist-button {
+    display: none;
+    color: white;
+    font-size: 1.8em;
+    line-height: 1em;
+    position: absolute;
+    top: 0.1em;
+    right: 0.1em;
+    box-shadow: 0 0 15px #222;
+    transition: all 0.1s linear;
+    cursor: pointer;
+}
+
+.watchlist-button:hover{
+    font-size: 2em;
 }
 
 @media only screen and (max-width: 800px){

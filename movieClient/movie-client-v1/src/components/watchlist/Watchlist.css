@@ -1,0 +1,61 @@
+.movie-container{
+    width: 95vw;
+    margin: 0 2.5vw;
+    margin-top: 30px;
+    justify-content: center;
+}
+.movie-container > *:first-child{
+    width: 100%;
+}
+
+.movie-poster{
+    position: relative;
+    height: 400px;
+    width: 270px;
+    border: 1px solid gold;
+    border-radius: 10px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: var(--img);
+}
+
+.movie-poster > img{
+    height: 100%;
+    width: 100%;
+}
+
+.movie-poster:hover .watchlist-button{
+    display: block;
+    background-color: transparent;
+    border-radius: 50%;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+.watchlist-button {
+    display: none;
+    color: white;
+    font-size: 1.8em;
+    line-height: 1em;
+    position: absolute;
+    top: 0.1em;
+    right: 0.1em;
+    box-shadow: 0 0 15px #222;
+    transition: all 0.1s linear;
+    cursor: pointer;
+}
+
+.watchlist-button:hover{
+    font-size: 2em;
+}
+
+@media only screen and (max-width: 800px){
+    .movie-detail{
+        flex-direction: column;
+        align-items: center;
+        top: 20px;
+    }
+}

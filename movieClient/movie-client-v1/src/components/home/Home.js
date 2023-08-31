@@ -3,7 +3,7 @@ import Hero from '../hero/Hero'
 
 const Home  = ({movies}) => {
     return (
-        <Hero movies ={movies} />
+        <Hero movies ={movies}/>
     )
 }
 

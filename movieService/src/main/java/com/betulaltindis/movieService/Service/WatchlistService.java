@@ -39,13 +39,36 @@ public class WatchlistService {
                 wl.setMovies(movies);
             }
         }
-        
         watchlistRepository.save(wl);
         return wl;
+    }
+
+    public Watchlist getWatchlist(String userId) {
+        return mongoTemplate.findById(userId, Watchlist.class);
     }
 
     private boolean checkUser(String userId){
         //check user from user-service 
         return true;
+    }
+
+    public Watchlist removeFromWatchlist(String userId, String imdbId) {
+        Movie movie = movieService.getMovieByImdbId(imdbId);
+        Watchlist wl = mongoTemplate.findById(userId, Watchlist.class);
+        if (wl == null) {
+            wl = new Watchlist();
+            wl.setUserId(userId);
+            List<Movie> movies = new ArrayList<Movie>();
+            movies.add(movie);
+            wl.setMovies(movies);
+        } else {
+            List<Movie> movies = wl.getMovies();
+            if (movies.contains(movie)) {
+                movies.remove(movie);
+                wl.setMovies(movies);
+            }
+        }
+        watchlistRepository.save(wl);
+        return wl;
     }
 }

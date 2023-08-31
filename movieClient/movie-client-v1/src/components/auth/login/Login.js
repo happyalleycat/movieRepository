@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { useRef, useState, useEffect } from "react";
 import Services from "../../../api/axiosConfig";
 import Urls from "../../../api/Urls";
-import {useAuth} from "../../../actions/Action";
+import { useAuth } from "../AuthActions";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
@@ -12,7 +12,7 @@ const Login = () => {
   const errRef = useRef();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState("");
+  const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState();
   const [success, setSuccess] = useState(false);
@@ -23,7 +23,7 @@ const Login = () => {
 
   useEffect(() => {
     setErrMsg("");
-  }, [user, pwd]);
+  }, [email, pwd]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ const Login = () => {
       const response = await Services.userService.post(
         Urls.login,
         JSON.stringify({
-          email: user,
+          email: email,
           password: pwd,
         }),
         {
@@ -41,16 +41,18 @@ const Login = () => {
       );
       const accessToken = response?.data?.token;
       const role = response?.data?.role;
-      setAuth({ user, pwd, role, accessToken });
-      setUser("");
+      const userId = response?.data?.userId;
+      
+      setAuth({ userId, email, pwd, role, accessToken });
+      setEmail("");
       setPwd("");
       setSuccess(true);
       navigate("/", {replace:true});
     } catch (err) {
       if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
+        setErrMsg("Missing E-mail or Password");
       } else if (err.response?.status === 403) {
-        setErrMsg("Wrong Username or Password");
+        setErrMsg("Wrong E-mail or Password");
       } else {
         setErrMsg("Login Failed");
       }
@@ -79,15 +81,15 @@ const Login = () => {
           </p>
           <h1>Sign In</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="username">Username:</label>
+            <label htmlFor="email">E-mail:</label>
             <input
               type="text"
-              id="username"
+              id="email"
               ref={userRef}
               autoComplete="off"
-              onChange={(e) => setUser(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               required
-              value={user}
+              value={email}
             />
             <label htmlFor="password">Password:</label>
             <input
