@@ -10,7 +10,8 @@ import Reviews from "./components/reviews/Reviews";
 import { Actions } from "./actions/Action";
 import Register from "./components/auth/register/Register";
 import Login from "./components/auth/login/Login";
-import { RequireAuth, IsLoggedIn } from "./components/auth/AuthActions";
+import Watchlist from "./components/watchlist/Watchlist";
+import { useAuth } from "./components/auth/AuthActions";
 
 function App() {
   const [movies, setMovies] = useState([]);
@@ -26,21 +27,16 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home movies={movies} />}></Route>
+          <Route path="/" element={<Home movies={movies}/>}></Route>
           <Route path="/Trailer/:ytTrailerId" element={<Trailer />}></Route>
-          <Route
-            path="/Reviews/:movieId"
-            element={
-              <Reviews
-                movie={movie}
-                setMovie={setMovie}
-                reviews={reviews}
-                setReviews={setReviews}
-              />
-            }
+          <Route path="/Reviews/:movieId"  element={
+              <Reviews movie={movie} setMovie={setMovie} reviews={reviews} setReviews={setReviews} />}
           ></Route>
           <Route path="/Register" element={<Register />}></Route>
           <Route path="/Login" element={<Login />}></Route>
+          <Route path="/Watchlist" element={
+              <Watchlist />}
+          ></Route>
         </Route>
       </Routes>
     </div>

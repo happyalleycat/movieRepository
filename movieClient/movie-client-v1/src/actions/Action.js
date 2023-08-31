@@ -1,7 +1,5 @@
 import Services from "../api/axiosConfig";
 import Urls from "../api/Urls";
-import { AuthContext } from "../components/auth/AuthProvider";
-import { useContext } from "react";
 
 export const Actions = {
   genericGet: async function (url, service, ...functions) {
@@ -21,7 +19,10 @@ export const Actions = {
     await Actions.genericGet(Urls.movies, Services.movieService, (resp) => {
       setMovies(resp.data);
     });
+  },
+  getWatchlist: async (userId, setWatchlist) => {
+    await Actions.genericGet(Urls.getWatchlist(userId), Services.movieService, (resp) => {
+      setWatchlist(resp.data);
+    });
   }
 };
-
-export const useAuth = () => {return useContext(AuthContext)}

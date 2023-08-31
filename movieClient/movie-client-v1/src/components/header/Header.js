@@ -6,13 +6,12 @@ import Container from "react-bootstrap/Container"
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 import {NavLink, Navigate, useNavigate} from "react-router-dom";
-import { IsLoggedIn } from "../auth/AuthActions";
+import { isLoggedIn } from "../auth/AuthActions";
 import "./Header.css";
 
 const Header = () => {
     const  navigate = useNavigate();
-    const loginResult = IsLoggedIn();
-    console.log(loginResult);
+    const loginResult = isLoggedIn();
     return(
         <Navbar bg="dark" variant="dark" expand="lg">
             <Container fluid>
@@ -27,7 +26,7 @@ const Header = () => {
                         navbarScroll
                     >
                     <NavLink className="nav-link" to="/">Home</NavLink>
-                    <NavLink className={loginResult ? "nav-link" : "nav-link hide"}>Watch List</NavLink>
+                    <NavLink className={loginResult ? "nav-link" : "nav-link hide" } to="/Watchlist">Watch List</NavLink>
                 </Nav>
                 <Button className={loginResult ? "hide" : ""} variant="outline-info" onClick= {() => navigate(`/Login`)}>Login</Button>
                 <Button className={loginResult ? "hide" : ""} variant="outline-info" onClick= {() => navigate(`/Register`)}>Register</Button>

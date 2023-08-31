@@ -1,8 +1,11 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../actions/Action";
+import { AuthContext } from "./AuthProvider";
+import { useContext } from "react";
 
 
-export const RequireAuth = () => {
+export const useAuth = () => {return useContext(AuthContext)}
+
+export const requireAuth = () => {
     const location = useLocation();
 
     return (
@@ -12,7 +15,7 @@ export const RequireAuth = () => {
     );
 }
 
-export const IsLoggedIn = () => {
+export const isLoggedIn = () => {
     const { auth } = useAuth();
     return !!Object.keys(auth).length;
 }
