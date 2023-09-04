@@ -2,6 +2,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "NamingServerApplication",
+            "request": "launch",
+            "mainClass": "com.example.namingserver.NamingServerApplication"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-MovieServiceApplication<movie-service>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
@@ -18,6 +24,27 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.betulaltindis.userService.UserServiceApplication",
             "projectName": "user-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=64834 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=user-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-NamingServerApplication<naming-server>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.example.namingserver.NamingServerApplication",
+            "projectName": "naming-server",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-ApiGatewayApplication<api-gateway>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.microservices.apigateway.ApiGatewayApplication",
+            "projectName": "api-gateway",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

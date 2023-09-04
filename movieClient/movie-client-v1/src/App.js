@@ -11,7 +11,6 @@ import { Actions } from "./actions/Action";
 import Register from "./components/auth/register/Register";
 import Login from "./components/auth/login/Login";
 import Watchlist from "./components/watchlist/Watchlist";
-import { useAuth } from "./components/auth/AuthActions";
 
 function App() {
   const [movies, setMovies] = useState([]);
