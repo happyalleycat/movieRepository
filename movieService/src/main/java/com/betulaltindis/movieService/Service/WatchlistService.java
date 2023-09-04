@@ -23,7 +23,11 @@ public class WatchlistService {
     @Autowired
     private MovieService movieService;
 
+    @Autowired
+    private UserServiceProxy proxy;
+
     public Watchlist addToWatchlist(String userId, String imdbId) {
+        checkUser(userId);
         Movie movie = movieService.getMovieByImdbId(imdbId);
         Watchlist wl = mongoTemplate.findById(userId, Watchlist.class);
         if (wl == null) {
@@ -44,15 +48,12 @@ public class WatchlistService {
     }
 
     public Watchlist getWatchlist(String userId) {
+        checkUser(userId);
         return mongoTemplate.findById(userId, Watchlist.class);
     }
 
-    private boolean checkUser(String userId){
-        //check user from user-service 
-        return true;
-    }
-
     public Watchlist removeFromWatchlist(String userId, String imdbId) {
+        checkUser(userId);
         Movie movie = movieService.getMovieByImdbId(imdbId);
         Watchlist wl = mongoTemplate.findById(userId, Watchlist.class);
         if (wl == null) {
@@ -70,5 +71,10 @@ public class WatchlistService {
         }
         watchlistRepository.save(wl);
         return wl;
+    }
+
+    private void checkUser(String userId){
+        if(!proxy.isUserExist(userId))
+            new Exception("User id doesn't exist!");
     }
 }
