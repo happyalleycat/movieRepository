@@ -17,7 +17,6 @@ import com.betulaltindis.movieService.Bean.Watchlist;
 import com.betulaltindis.movieService.Service.WatchlistService;
 
 @RestController
-@CrossOrigin(origins = "*") 
 public class WatchlistController {
 
     @Autowired

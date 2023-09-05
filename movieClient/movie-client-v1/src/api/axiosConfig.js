@@ -1,15 +1,17 @@
 import axios from "axios";
 
+const apiGatewayBaseUrl = 'http://localhost:8765';
+
 const Services = {
   movieService: axios.create({
-    baseURL: "http://localhost:8082",
+    baseURL: `${apiGatewayBaseUrl}/movie-service`,
     headers: {
       "ngrok-skip-browser-warning": "true",
     },
   }),
 
   userService: axios.create({
-    baseURL: "http://localhost:8081",
+    baseURL: `${apiGatewayBaseUrl}/user-service`,
     headers: {
       "ngrok-skip-browser-warning": "true",
     },

@@ -16,7 +16,6 @@ import com.betulaltindis.movieService.Service.ReviewService;
 
 @RestController
 @RequestMapping("/api/v1/reviews")
-@CrossOrigin(origins = "*") 
 public class ReviewController {
 
     @Autowired
