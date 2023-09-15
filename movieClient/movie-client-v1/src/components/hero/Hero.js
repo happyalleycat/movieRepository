@@ -28,8 +28,6 @@ const Hero = ({movies}) => {
 
     useEffect(() => {
         setWlState(movies.map(m => wlMovies.some(x => (x.title === m.title))));
-        console.log(wlState);
-
     }, [wlMovies]);
 
     const handleClick = async (i, imdbId) => {

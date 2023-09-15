@@ -1,11 +1,38 @@
 services:
+  naming-server:
+    build:
+      context: ./naming-server
+      args:
+        JAR_FILE: target/*.jar
+    image: naming-server:0.0.1-SNAPSHOT
+    ports:
+      - "8761:8761"
+    networks:
+      - movie-network 
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      args:
+        JAR_FILE: target/*.jar
+    image: api-gateway:0.0.1-SNAPSHOT
+    ports:
+      - "8765:8765"
+    networks:
+      - movie-network
+    depends_on:
+      - naming-server
+    environment:
+      MANAGEMENT.ZIPKIN.TRACING.ENDPOINT:  http://zipkin-server:9411/api/v2/spans
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+
   user-db:
     image: postgres
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=Tencere_55**
-      - POSTGRES_DB=jwt_security
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
     ports:
       - '5432:5432'
     networks:
@@ -26,7 +53,9 @@ services:
     depends_on:
       - user-db
     environment:
-      MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
+      MANAGEMENT.ZIPKIN.TRACING.ENDPOINT:  http://zipkin-server:9411/api/v2/spans
+      EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
+
 
   movie-service:
     build:
@@ -41,17 +70,27 @@ services:
     depends_on:
       - user-service
     environment:
+      MANAGEMENT.ZIPKIN.TRACING.ENDPOINT:  http://zipkin-server:9411/api/v2/spans
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka
-      SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
-      # MANAGEMENT.ZIPKIN.TRACING.ENDPOINT: http://zipkin-server:9411/api/v2/spans
 
-  zipkin-server:
-    image: openzipkin/zipkin:2.23
+  movie-client:
+    build:
+      context: ./movieClient/movie-client-v1
+    image: movie-client:0.0.1-SNAPSHOT
     ports:
-      - "9411:9411"
+      - "3000:3000"
     networks:
       - movie-network
-    restart: always #Restart if there is a problem starting up
+    depends_on:
+      - movie-service
+
+  zipkin-server:
+    image: openzipkin/zipkin:latest
+    networks:
+      - movie-network
+    ports:
+      - "9411:9411"
+    restart: always
 
 networks:
   movie-network:
