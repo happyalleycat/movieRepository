@@ -47,7 +47,7 @@ services:
         JAR_FILE: target/*.jar
     image: user-service:0.0.1-SNAPSHOT
     ports:
-      - "8081:8081"
+      - "8100:8100"
     networks:
       - movie-network
     depends_on:
